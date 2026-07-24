@@ -1,20 +1,16 @@
 services:
   db:
-    image: mysql:8.4
+    image: postgres:17
     container_name: kakeibo-db
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kakeibo
-      MYSQL_USER: app
-      MYSQL_PASSWORD: password
+      POSTGRES_DB: kakeibo
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: password
       TZ: Asia/Tokyo
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_0900_ai_ci
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - db-data:/var/lib/mysql
+      - db-data:/var/lib/postgresql/data
 
 volumes:
   db-data:
