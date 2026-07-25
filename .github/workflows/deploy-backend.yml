@@ -57,4 +57,5 @@ jobs:
         run: |
           aws ecs wait services-stable \
             --cluster ${{ env.ECS_CLUSTER }} \
-            --services ${{ env.ECS_SERVICE }}
+            --services ${{ env.ECS_SERVICE }} \
+            --waiter-config maxAttempts=60
