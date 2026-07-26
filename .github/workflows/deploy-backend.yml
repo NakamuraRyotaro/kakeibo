@@ -55,7 +55,22 @@ jobs:
 
       - name: Wait for deployment
         run: |
-          aws ecs wait services-stable \
-            --cluster ${{ env.ECS_CLUSTER }} \
-            --services ${{ env.ECS_SERVICE }} \
-            --waiter-config maxAttempts=60
+          for i in $(seq 1 60); do
+            STATE=$(aws ecs describe-services \
+              --cluster ${{ env.ECS_CLUSTER }} \
+              --services ${{ env.ECS_SERVICE }} \
+              --query 'services[0].deployments[?status==`PRIMARY`].rolloutState' \
+              --output text)
+            echo "[$i/60] rolloutState=$STATE"
+            if [ "$STATE" = "COMPLETED" ]; then
+              echo "Deployment succeeded"
+              exit 0
+            fi
+            if [ "$STATE" = "FAILED" ]; then
+              echo "Deployment failed"
+              exit 1
+            fi
+            sleep 15
+          done
+          echo "Timeout waiting for deployment"
+          exit 1
