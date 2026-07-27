@@ -17,6 +17,7 @@ env:
   ECR_REPOSITORY: kakeibo-api
   ECS_CLUSTER: kakeibo
   ECS_SERVICE: kakeibo-api-service
+  ECS_TASK_FAMILY: kakeibo-api
 
 jobs:
   deploy:
@@ -51,6 +52,7 @@ jobs:
           aws ecs update-service \
             --cluster ${{ env.ECS_CLUSTER }} \
             --service ${{ env.ECS_SERVICE }} \
+            --task-definition ${{ env.ECS_TASK_FAMILY }} \
             --force-new-deployment
 
       - name: Wait for deployment
