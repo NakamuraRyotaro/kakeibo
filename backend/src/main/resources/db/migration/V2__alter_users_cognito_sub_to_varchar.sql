@@ -1,0 +1,1 @@
+ALTER TABLE users ALTER COLUMN cognito_sub TYPE VARCHAR(36);

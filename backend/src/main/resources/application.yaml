@@ -1,4 +1,9 @@
+debug: true
+
 spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
   application:
     name: kakeibo-api          
   datasource:                  
