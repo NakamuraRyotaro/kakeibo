@@ -1,6 +1,9 @@
-debug: true
-
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_roa3Yf4zk
   flyway:
     enabled: true
     locations: classpath:db/migration
